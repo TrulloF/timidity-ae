@@ -45,7 +45,7 @@ import java.util.Locale;
 @SuppressLint("CommitPrefEdits")
 public class SettingsStorage {
 	// ---------SETTINGS STORAGE----------
-	private static SharedPreferences prefs; // The preferences used by this class
+	public static SharedPreferences prefs; // The preferences used by this class
 	public static boolean firstRun;
 	public static int theme; // Effective theme: 1 = Light, 2 = Dark (0 = legacy)
 	public static int themeMode = 1; // Setting: 1 = Light, 2 = Dark, 3 = Follow system

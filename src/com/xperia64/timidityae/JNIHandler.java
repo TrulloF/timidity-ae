@@ -358,8 +358,80 @@ public class JNIHandler {
 		}
 	}
 
+	private static final String EFF_BEGIN = "# TAE-EFFECTS-BEGIN (generated from Settings, do not edit)";
+	private static final String EFF_END = "# TAE-EFFECTS-END";
+
+	private static String effLine(String kind, String mode, String level) {
+		if (mode == null || mode.equals("x"))
+			return null;
+		int lvl = 0;
+		try {
+			lvl = Integer.parseInt(level.trim());
+		} catch (Exception ignored) {
+		}
+		String arg = mode;
+		if (lvl > 0 && !mode.equals("d"))
+			arg = mode + "," + (kind.equals("delay") ? lvl : Math.min(lvl, 127));
+		return "opt -EF" + kind + "=" + arg;
+	}
+
+	/** Writes the effect options into a marked block of timidity.cfg (works with manual configs too). */
+	public static void syncEffectsConfig(String cfgPath) {
+		try {
+			android.content.SharedPreferences p = SettingsStorage.prefs;
+			if (p == null)
+				return;
+			StringBuilder block = new StringBuilder();
+			String[] lines = {
+					effLine("reverb", p.getString("effReverb", "x"), p.getString("effReverbLevel", "0")),
+					effLine("chorus", p.getString("effChorus", "x"), p.getString("effChorusLevel", "0")),
+					effLine("delay", p.getString("effDelay", "x"), p.getString("effDelayLevel", "0"))};
+			boolean any = false;
+			for (String l : lines)
+				if (l != null) {
+					if (!any)
+						block.append(EFF_BEGIN).append('\n');
+					any = true;
+					block.append(l).append('\n');
+				}
+			if (any)
+				block.append(EFF_END).append('\n');
+			java.io.File f = new java.io.File(cfgPath);
+			if (!f.exists())
+				return;
+			StringBuilder out = new StringBuilder();
+			boolean skip = false;
+			java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(f));
+			String ln;
+			String orig = "";
+			while ((ln = br.readLine()) != null) {
+				orig += ln + "\n";
+				if (ln.startsWith("# TAE-EFFECTS-BEGIN")) {
+					skip = true;
+					continue;
+				}
+				if (skip) {
+					if (ln.startsWith("# TAE-EFFECTS-END"))
+						skip = false;
+					continue;
+				}
+				out.append(ln).append('\n');
+			}
+			br.close();
+			String result = block.toString() + out;
+			if (result.equals(orig))
+				return;
+			java.io.FileWriter w = new java.io.FileWriter(f, false);
+			w.write(result);
+			w.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static AudioAttributes mAudioAttributes;
 	public static int init(String path, String file, int mono, int resamp, int b, int r, boolean preserveSilence, boolean reloading, boolean freeInsts, int verbosity, int v) {
+		syncEffectsConfig(path + file);
 		if (state == STATE_UNINIT) {
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				mAudioAttributes = new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_MEDIA).build();

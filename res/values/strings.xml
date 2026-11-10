@@ -267,6 +267,48 @@
 		<item>3 (Debug)</item>
 		<item>4 (Debug Silly)</item>
 	</string-array>
+	<string-array name="effect_reverb_items">
+		<item>Engine default</item>
+		<item>Off</item>
+		<item>Normal</item>
+		<item>Global</item>
+		<item>Freeverb</item>
+		<item>Global Freeverb</item>
+	</string-array>
+	<string-array name="effect_reverb_values">
+		<item>x</item>
+		<item>d</item>
+		<item>n</item>
+		<item>g</item>
+		<item>f</item>
+		<item>G</item>
+	</string-array>
+	<string-array name="effect_chorus_items">
+		<item>Engine default</item>
+		<item>Off</item>
+		<item>Normal</item>
+		<item>Surround</item>
+	</string-array>
+	<string-array name="effect_chorus_values">
+		<item>x</item>
+		<item>d</item>
+		<item>n</item>
+		<item>s</item>
+	</string-array>
+	<string-array name="effect_delay_items">
+		<item>Engine default</item>
+		<item>Off</item>
+		<item>Left</item>
+		<item>Right</item>
+		<item>Both (rotate)</item>
+	</string-array>
+	<string-array name="effect_delay_values">
+		<item>x</item>
+		<item>d</item>
+		<item>l</item>
+		<item>r</item>
+		<item>b</item>
+	</string-array>
 	<string-array name="background_verbosity_items">
 		<item>-1</item>
 		<item>0</item>

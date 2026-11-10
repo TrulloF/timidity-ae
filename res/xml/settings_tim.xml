@@ -58,6 +58,48 @@
 			android:summary="@string/sett_buff_sum"
 			android:title="@string/sett_buff"/>
 		<ListPreference
+			android:defaultValue="x"
+			android:entries="@array/effect_reverb_items"
+			android:entryValues="@array/effect_reverb_values"
+			android:key="effReverb"
+			android:summary="%s"
+			android:title="Reverb"/>
+		<EditTextPreference
+			android:defaultValue="0"
+			android:inputType="number"
+			android:maxLines="1"
+			android:key="effReverbLevel"
+			android:summary="1-127, 0 = automatic (MIDI-controlled)"
+			android:title="Reverb level"/>
+		<ListPreference
+			android:defaultValue="x"
+			android:entries="@array/effect_chorus_items"
+			android:entryValues="@array/effect_chorus_values"
+			android:key="effChorus"
+			android:summary="%s"
+			android:title="Chorus"/>
+		<EditTextPreference
+			android:defaultValue="0"
+			android:inputType="number"
+			android:maxLines="1"
+			android:key="effChorusLevel"
+			android:summary="1-127, 0 = automatic (MIDI-controlled)"
+			android:title="Chorus level"/>
+		<ListPreference
+			android:defaultValue="x"
+			android:entries="@array/effect_delay_items"
+			android:entryValues="@array/effect_delay_values"
+			android:key="effDelay"
+			android:summary="%s"
+			android:title="Delay"/>
+		<EditTextPreference
+			android:defaultValue="0"
+			android:inputType="number"
+			android:maxLines="1"
+			android:key="effDelayLevel"
+			android:summary="Milliseconds, 0 = default"
+			android:title="Delay time"/>
+		<ListPreference
 			android:defaultValue="-1"
 			android:entries="@array/select_verbosity_items"
 			android:entryValues="@array/background_verbosity_items"
