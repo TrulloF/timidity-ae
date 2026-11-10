@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -436,6 +437,8 @@ public class TimidityActivity extends AppCompatActivity implements FileBrowserFr
 			SettingsStorage.nativeMedia = true;
 		}
 
+		// Follow the system day/night setting if requested (the process may outlive a night mode change)
+		SettingsStorage.updateEffectiveTheme(this);
 		oldTheme = SettingsStorage.theme;
 		oldPlist = SettingsStorage.enableDragNDrop;
 		this.setTheme((SettingsStorage.theme == 1) ? android.support.v7.appcompat.R.style.Theme_AppCompat_Light_DarkActionBar : android.support.v7.appcompat.R.style.Theme_AppCompat);
@@ -839,6 +842,22 @@ public class TimidityActivity extends AppCompatActivity implements FileBrowserFr
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// uiMode is handled by this activity (see manifest), so a day/night switch arrives here.
+		if (SettingsStorage.themeMode == 3 && viewPager != null && SettingsStorage.updateEffectiveTheme(this)) {
+			Intent intent = getIntent();
+			intent.putExtra("justtheme", true);
+			intent.putExtra("needservice", false);
+			intent.putExtra("fragmentpage", viewPager.getCurrentItem());
+			finish();
+			overridePendingTransition(0, 0);
+			startActivity(intent);
+			overridePendingTransition(0, 0);
+		}
 	}
 
 	@Override

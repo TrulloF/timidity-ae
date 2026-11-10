@@ -47,7 +47,35 @@ public class SettingsStorage {
 	// ---------SETTINGS STORAGE----------
 	private static SharedPreferences prefs; // The preferences used by this class
 	public static boolean firstRun;
-	public static int theme; // 1 = Light, 2 = Dark
+	public static int theme; // Effective theme: 1 = Light, 2 = Dark (0 = legacy)
+	public static int themeMode = 1; // Setting: 1 = Light, 2 = Dark, 3 = Follow system
+
+	/**
+	 * Resolves a theme setting (1 light, 2 dark, 3 follow system) to an effective theme (1 or 2).
+	 */
+	public static int resolveTheme(Context c, int mode) {
+		if (mode == 3) {
+			int night = c.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+			return (night == Configuration.UI_MODE_NIGHT_YES) ? 2 : 1;
+		}
+		return mode;
+	}
+
+	/**
+	 * Re-evaluates the effective theme from the stored setting and the current system night mode.
+	 * Returns true if the effective theme changed.
+	 */
+	public static boolean updateEffectiveTheme(Context c) {
+		int old = theme;
+		if (theme != 0) {
+			theme = resolveTheme(c, themeMode);
+		}
+		if (old != theme) {
+			// cached row colour belongs to the previous theme
+			Globals.defaultListColor = -1;
+		}
+		return old != theme;
+	}
 	public static boolean showHiddenFiles;
 	public static String homeFolder;
 	public static String dataFolder;
@@ -110,7 +138,9 @@ public class SettingsStorage {
 		prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		firstRun = prefs.getBoolean(Constants.sett_first_run, true);
 		// The light theme is broken below ICS it seems.
-		theme = (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)?0:Integer.parseInt(prefs.getString(Constants.sett_theme, "1"));
+		themeMode = Integer.parseInt(prefs.getString(Constants.sett_theme, "3"));
+		theme = (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)?0:resolveTheme(c, themeMode);
+		Globals.defaultListColor = -1;
 		showHiddenFiles = prefs.getBoolean(Constants.sett_show_hidden_files, false);
 		homeFolder = prefs.getString(Constants.sett_home_folder, Environment.getExternalStorageDirectory().getAbsolutePath());
 		dataFolder = prefs.getString(Constants.sett_data_folder, Environment.getExternalStorageDirectory() + "/TimidityAE/");

@@ -4,4 +4,6 @@
 	<color name="background_holo_dark">#ff000000</color>
 	<color name="listSelection">#FF9C9C9C</color>
 
+	<color name="notification_icon_tint">#FF424242</color>
+
 </resources>

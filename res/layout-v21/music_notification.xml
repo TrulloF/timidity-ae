@@ -21,9 +21,11 @@
 		android:ellipsize="end"
 		android:singleLine="true"
 		android:text=""
-		android:textColor="#000000"/>
+		android:textAppearance="@android:style/TextAppearance.Material.Notification.Title"/>
 
 	<ImageButton
+		android:background="?android:attr/selectableItemBackgroundBorderless"
+		android:tint="@color/notification_icon_tint"
 		android:id="@+id/notPrev"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
@@ -33,6 +35,8 @@
 		android:src="@android:drawable/ic_media_previous"/>
 
 	<ImageButton
+		android:background="?android:attr/selectableItemBackgroundBorderless"
+		android:tint="@color/notification_icon_tint"
 		android:id="@+id/notStop"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -42,6 +46,8 @@
 		android:src="@android:drawable/ic_menu_close_clear_cancel"/>
 
 	<ImageButton
+		android:background="?android:attr/selectableItemBackgroundBorderless"
+		android:tint="@color/notification_icon_tint"
 		android:id="@+id/notPause"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
@@ -51,6 +57,8 @@
 		android:src="@android:drawable/ic_media_pause"/>
 
 	<ImageButton
+		android:background="?android:attr/selectableItemBackgroundBorderless"
+		android:tint="@color/notification_icon_tint"
 		android:id="@+id/notNext"
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"

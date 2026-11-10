@@ -133,6 +133,10 @@ public class FileBrowserFragment extends ListFragment {
 	}
 
 	public void getDir(String dirPath) {
+		if (dirPath == null) {
+			// The service has no current folder yet (e.g. playback started from a VIEW intent)
+			return;
+		}
 		if (dirPath.matches(Globals.repeatedSeparatorString) && !new File(dirPath).canRead()) {
 			return;
 		}

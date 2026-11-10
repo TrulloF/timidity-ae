@@ -22,6 +22,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import com.xperia64.timidityae.R;
 import com.xperia64.timidityae.SettingsActivity;
 import com.xperia64.timidityae.gui.dialogs.FileBrowserDialog;
+import com.xperia64.timidityae.util.Globals;
 import com.xperia64.timidityae.util.ObjectSerializer;
 import com.xperia64.timidityae.util.SettingsStorage;
 
@@ -85,7 +86,9 @@ public class DisplayPrefsFragment extends PreferenceFragmentCompat {
 
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				SettingsStorage.theme = Integer.parseInt((String) newValue);
+				SettingsStorage.themeMode = Integer.parseInt((String) newValue);
+				SettingsStorage.theme = SettingsStorage.resolveTheme(s, SettingsStorage.themeMode);
+				Globals.defaultListColor = -1;
 
 				// Just to be safe
 				try {

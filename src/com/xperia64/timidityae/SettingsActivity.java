@@ -10,6 +10,7 @@ package com.xperia64.timidityae;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
@@ -63,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity implements FileBrowserDi
 	protected void onCreate(Bundle savedInstanceState) {
 
 		mInstance = this;
+		SettingsStorage.updateEffectiveTheme(this);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			this.setTheme(android.support.v7.appcompat.R.style.Theme_AppCompat);
 		} else {
@@ -78,6 +80,14 @@ public class SettingsActivity extends AppCompatActivity implements FileBrowserDi
 		mFragmentTransaction.replace(android.R.id.content, new RootPrefsFragment());
 		mFragmentTransaction.commit();
 		loadDispSettings = getIntent().getBooleanExtra("returnToDisp", false);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (SettingsStorage.themeMode == 3 && SettingsStorage.updateEffectiveTheme(this)) {
+			recreate();
+		}
 	}
 
 	@Override

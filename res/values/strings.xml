@@ -32,7 +32,7 @@
 	<string name="sett_ds">Display Settings</string>
 	<string name="sett_ds_sum">Display and file browser settings</string>
 	<string name="sett_theme">Theme</string>
-	<string name="sett_theme_sum">App theme</string>
+	<string name="sett_theme_sum">Light, dark, or follow the system day/night setting</string>
 	<string name="sett_plus">TiMidity++ Settings</string>
 	<string name="sett_plus_sum">TiMidity++ settings (may stop playback)</string>
 	<string name="sett_dat">Data Settings</string>
@@ -226,10 +226,12 @@
 	<string-array name="theme_items">
 		<item>Light</item>
 		<item>Dark</item>
+		<item>Follow system</item>
 	</string-array>
 	<string-array name="background_theme_items">
 		<item>1</item>
 		<item>2</item>
+		<item>3</item>
 	</string-array>
 	<string-array name="resamp_items">
 		<item>Cubic Spline</item>

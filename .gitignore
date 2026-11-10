@@ -18,3 +18,9 @@ gradle/
 captures/
 release/
 .cxx/
+build/
+.gradle/
+local.properties
+*.apk
+prebuilt-libs/
+*.idsig
