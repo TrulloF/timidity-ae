@@ -163,6 +163,7 @@ public class SettingsStorage {
 		nativeMidi = onlyNative || prefs.getBoolean(Constants.sett_native_midi, false);
 
 		nativeMedia = prefs.getBoolean(Constants.sett_native_media, true);
+		JNIHandler.syncEffectsConfig(dataFolder + "/timidity/timidity.cfg");
 
 		soxEnableSpeed = prefs.getBoolean(Constants.sett_sox_speed, false);
 		soxSpeedVal = prefs.getFloat(Constants.sett_sox_speed_val, -1);
