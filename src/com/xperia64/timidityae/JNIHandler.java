@@ -418,7 +418,7 @@ public class JNIHandler {
 				out.append(ln).append('\n');
 			}
 			br.close();
-			String result = block.toString() + out;
+			String result = out.toString() + block;
 			if (result.equals(orig))
 				return;
 			java.io.FileWriter w = new java.io.FileWriter(f, false);
